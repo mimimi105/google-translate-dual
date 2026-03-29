@@ -35,6 +35,7 @@ const userscript = `// ==UserScript==
 // @author       mimimi105
 // @homepageURL  https://github.com/mimimi105/google-translate-dual
 // @supportURL   https://github.com/mimimi105/google-translate-dual/issues
+// @license      MIT
 // @run-at       document-idle
 // ==/UserScript==
 
