@@ -24,7 +24,7 @@ const css = await Bun.file("./src/styles/style.css").text();
 
 const userscript = `// ==UserScript==
 // @name         Google Translate Dual Direction
-// @namespace    https://github.com/google-translate-dual
+// @namespace    https://github.com/mimimi105/google-translate-dual
 // @version      1.0.0
 // @description  Adds a reverse translation panel below Google Translate
 // @match        https://translate.google.com/*
@@ -32,6 +32,9 @@ const userscript = `// ==UserScript==
 // @connect      translate.googleapis.com
 // @connect      translate.google.com
 // @grant        none
+// @author       mimimi105
+// @homepageURL  https://github.com/mimimi105/google-translate-dual
+// @supportURL   https://github.com/mimimi105/google-translate-dual/issues
 // @run-at       document-idle
 // ==/UserScript==
 

@@ -3,6 +3,8 @@
   "name": "Google Translate Dual Direction",
   "version": "1.0.0",
   "description": "Adds a reverse translation panel below Google Translate",
+  "author": "mimimi105",
+  "homepage_url": "https://github.com/mimimi105/google-translate-dual",
   "permissions": [],
   "host_permissions": [
     "https://translate.googleapis.com/*"

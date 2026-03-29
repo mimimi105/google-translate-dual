@@ -1,7 +1,9 @@
 {
-  "name": "google-translate-extension",
+  "name": "google-translate-dual",
   "type": "module",
   "private": true,
+  "author": "mimimi105",
+  "repository": "https://github.com/mimimi105/google-translate-dual",
   "scripts": {
     "build": "bun run build.ts",
     "dev": "bun run build.ts --watch"
