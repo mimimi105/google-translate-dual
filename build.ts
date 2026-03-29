@@ -16,11 +16,11 @@ if (!result.success) {
 
 // Copy static files to dist
 await Bun.write("./dist/manifest.json", Bun.file("./manifest.json"));
-await Bun.write("./dist/style.css", Bun.file("./style.css"));
+await Bun.write("./dist/style.css", Bun.file("./src/styles/style.css"));
 
 // Generate Tampermonkey userscript
 const js = await Bun.file("./dist/content.js").text();
-const css = await Bun.file("./style.css").text();
+const css = await Bun.file("./src/styles/style.css").text();
 
 const userscript = `// ==UserScript==
 // @name         Google Translate Dual Direction
