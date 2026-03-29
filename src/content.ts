@@ -240,8 +240,9 @@ function createPanel(sl: string, tl: string): HTMLElement {
 
   const toggleTrack = panel.querySelector(".dual-toggle-track")!;
 
-  toggleInput.addEventListener("change", () => {
-    if (toggleInput.checked) {
+  function setAutoMode(on: boolean) {
+    toggleInput.checked = on;
+    if (on) {
       toggleTrack.classList.add("active");
       textarea.readOnly = true;
       startAutoWatch();
@@ -250,12 +251,30 @@ function createPanel(sl: string, tl: string): HTMLElement {
       textarea.readOnly = false;
       stopAutoWatch();
     }
+  }
+
+  toggleInput.addEventListener("change", () => {
+    const on = toggleInput.checked;
+    localStorage.setItem("gt-dual-auto-retranslate", on ? "1" : "0");
+    setAutoMode(on);
   });
+
+  // Restore saved toggle state
+  const saved = localStorage.getItem("gt-dual-auto-retranslate");
+  if (saved === "1") {
+    setAutoMode(true);
+  }
 
   return panel;
 }
 
+function isOriginalReady(): boolean {
+  // Wait until the original textarea is rendered (not just the loading spinner)
+  return !!document.querySelector("textarea.er8xn");
+}
+
 function findInsertionPoint(): Element | null {
+  if (!isOriginalReady()) return null;
   return document.querySelector(".OPPzxe");
 }
 
@@ -284,7 +303,7 @@ function watchUrlChange() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-function waitAndInject() {
+function initAfterLoad() {
   if (findInsertionPoint()) {
     inject();
     watchUrlChange();
@@ -300,4 +319,8 @@ function waitAndInject() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-waitAndInject();
+if (document.readyState === "complete") {
+  initAfterLoad();
+} else {
+  window.addEventListener("load", initAfterLoad);
+}
