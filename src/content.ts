@@ -1,18 +1,11 @@
-const LANG_NAMES: Record<string, string> = {
-  ja: "日本語",
-  en: "English",
-  ko: "한국어",
-  zh: "中文",
-  fr: "Français",
-  de: "Deutsch",
-  es: "Español",
-  pt: "Português",
-  ru: "Русский",
-  it: "Italiano",
-};
+const langDisplayNames = new Intl.DisplayNames(["ja"], { type: "language" });
 
 function getLangName(code: string): string {
-  return LANG_NAMES[code] ?? code;
+  try {
+    return langDisplayNames.of(code) ?? code;
+  } catch {
+    return code;
+  }
 }
 
 function getParams(): { sl: string; tl: string } | null {
