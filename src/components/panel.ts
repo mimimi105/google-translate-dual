@@ -10,6 +10,26 @@ import { translate } from "../translate.ts";
 import { createTtsButton } from "./tts-button.ts";
 import { t } from "../i18n.ts";
 
+function el<K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  attrs?: Record<string, string>,
+  children?: (Node | string)[]
+): HTMLElementTagNameMap[K] {
+  const e = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "className") e.className = v;
+      else e.setAttribute(k, v);
+    }
+  }
+  if (children) {
+    for (const c of children) {
+      e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+  }
+  return e;
+}
+
 function updateFontSize(panel: HTMLElement, text: string) {
   panel.classList.toggle("font-small", text.length > FONT_SMALL_THRESHOLD);
 }
@@ -21,38 +41,63 @@ export function createPanel(sl: string, tl: string): HTMLElement {
   const panel = document.createElement("div");
   panel.id = PANEL_ID;
 
-  panel.innerHTML = `
-    <div class="dual-header">
-      <div class="dual-header-left">
-        <span class="lang-label">${getLangName(revSl)}</span>
-        <span class="arrow">→</span>
-        <span class="lang-label">${getLangName(revTl)}</span>
-      </div>
-      <label class="dual-auto-toggle">
-        <span class="dual-auto-toggle-label">${t("autoRetranslate")}</span>
-        <div class="dual-toggle-track">
-          <div class="dual-toggle-thumb"></div>
-          <input type="checkbox" class="dual-toggle-input" />
-        </div>
-      </label>
-    </div>
-    <div class="dual-body">
-      <div class="dual-input-area">
-        <textarea placeholder="${t("placeholder", { lang: getLangName(revSl) })}"></textarea>
-        <div class="dual-tts-row" data-side="input"></div>
-      </div>
-      <div class="dual-output-area">
-        <div class="result-text placeholder">${t("resultPlaceholder")}</div>
-        <div class="dual-tts-row" data-side="output"></div>
-      </div>
-    </div>
-  `;
+  // Header
+  const headerLeft = el("div", { className: "dual-header-left" }, [
+    el("span", { className: "lang-label" }, [getLangName(revSl)]),
+    el("span", { className: "arrow" }, ["\u2192"]),
+    el("span", { className: "lang-label" }, [getLangName(revTl)]),
+  ]);
 
-  const textarea = panel.querySelector("textarea")!;
-  const resultDiv = panel.querySelector(".result-text")!;
-  const toggleInput =
-    panel.querySelector<HTMLInputElement>(".dual-toggle-input")!;
-  const toggleTrack = panel.querySelector(".dual-toggle-track")!;
+  const toggleInput = el("input", {
+    type: "checkbox",
+    className: "dual-toggle-input",
+  }) as HTMLInputElement;
+  const toggleThumb = el("div", { className: "dual-toggle-thumb" });
+  const toggleTrack = el("div", { className: "dual-toggle-track" }, [
+    toggleThumb,
+    toggleInput,
+  ]);
+  const autoToggle = el("label", { className: "dual-auto-toggle" }, [
+    el("span", { className: "dual-auto-toggle-label" }, [t("autoRetranslate")]),
+    toggleTrack,
+  ]);
+
+  const header = el("div", { className: "dual-header" }, [
+    headerLeft,
+    autoToggle,
+  ]);
+
+  // Input area
+  const textarea = el("textarea", {
+    placeholder: t("placeholder", { lang: getLangName(revSl) }),
+  }) as HTMLTextAreaElement;
+  const inputTtsRow = el("div", {
+    className: "dual-tts-row",
+    "data-side": "input",
+  });
+  const inputArea = el("div", { className: "dual-input-area" }, [
+    textarea,
+    inputTtsRow,
+  ]);
+
+  // Output area
+  const resultDiv = el("div", { className: "result-text placeholder" }, [
+    t("resultPlaceholder"),
+  ]);
+  const outputTtsRow = el("div", {
+    className: "dual-tts-row",
+    "data-side": "output",
+  });
+  const outputArea = el("div", { className: "dual-output-area" }, [
+    resultDiv,
+    outputTtsRow,
+  ]);
+
+  // Body
+  const body = el("div", { className: "dual-body" }, [inputArea, outputArea]);
+
+  panel.appendChild(header);
+  panel.appendChild(body);
 
   // TTS buttons
   const inputTtsBtn = createTtsButton(revSl, () => textarea.value);
@@ -60,20 +105,14 @@ export function createPanel(sl: string, tl: string): HTMLElement {
     const text = resultDiv.textContent ?? "";
     return resultDiv.classList.contains("placeholder") ? "" : text;
   });
-
-  panel
-    .querySelector('.dual-tts-row[data-side="input"]')!
-    .appendChild(inputTtsBtn);
-  panel
-    .querySelector('.dual-tts-row[data-side="output"]')!
-    .appendChild(outputTtsBtn);
+  inputTtsRow.appendChild(inputTtsBtn);
+  outputTtsRow.appendChild(outputTtsBtn);
 
   // Translation logic
   let debounceTimer: ReturnType<typeof setTimeout>;
   let lastResult = "";
 
   function showLoading() {
-    // Append "..." to existing result instead of replacing it
     if (lastResult) {
       resultDiv.textContent = lastResult + "...";
       resultDiv.classList.remove("placeholder");
@@ -84,11 +123,22 @@ export function createPanel(sl: string, tl: string): HTMLElement {
     outputTtsBtn.disabled = true;
   }
 
+  function autoResize() {
+    if (!panel.isConnected) {
+      // Defer until panel is in DOM
+      requestAnimationFrame(() => autoResize());
+      return;
+    }
+    textarea.style.height = "0";
+    textarea.style.height = Math.max(textarea.scrollHeight, 166) + "px";
+  }
+
   function triggerTranslate() {
     clearTimeout(debounceTimer);
     const text = textarea.value;
 
     updateFontSize(panel, text);
+    autoResize();
     inputTtsBtn.disabled = !text.trim();
 
     if (!text.trim()) {

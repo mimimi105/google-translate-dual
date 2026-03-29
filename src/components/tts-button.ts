@@ -1,5 +1,10 @@
-import { SpeakerIcon, StopIcon } from "./icons.ts";
+import { createSpeakerIcon, createStopIcon } from "./icons.ts";
 import { t } from "../i18n.ts";
+
+function setIcon(btn: HTMLButtonElement, icon: SVGSVGElement) {
+  while (btn.firstChild) btn.removeChild(btn.firstChild);
+  btn.appendChild(icon);
+}
 
 export function createTtsButton(
   lang: string,
@@ -7,7 +12,7 @@ export function createTtsButton(
 ): HTMLButtonElement {
   const btn = document.createElement("button");
   btn.className = "dual-tts-btn";
-  btn.innerHTML = SpeakerIcon;
+  setIcon(btn, createSpeakerIcon());
   btn.title = t("listen");
   btn.disabled = true;
 
@@ -22,7 +27,7 @@ export function createTtsButton(
     }
     playing = false;
     btn.classList.remove("playing");
-    btn.innerHTML = SpeakerIcon;
+    setIcon(btn, createSpeakerIcon());
     btn.title = t("listen");
   }
 
@@ -39,7 +44,7 @@ export function createTtsButton(
     audio = new Audio(ttsUrl);
     playing = true;
     btn.classList.add("playing");
-    btn.innerHTML = StopIcon;
+    setIcon(btn, createStopIcon());
     btn.title = t("stop");
 
     audio.play().catch(() => stop());

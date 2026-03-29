@@ -41,6 +41,7 @@
   flex: 1;
   min-height: 80px;
   position: relative;
+  align-self: flex-start;
 }
 
 #gt-dual-reverse-panel .dual-input-area textarea {
@@ -56,6 +57,7 @@
   resize: none;
   outline: none;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 #gt-dual-reverse-panel .dual-input-area textarea:focus {
