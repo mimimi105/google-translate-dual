@@ -110,9 +110,18 @@ function createPanel(sl: string, tl: string): HTMLElement {
 
   panel.innerHTML = `
     <div class="dual-header">
-      <span class="lang-label">${getLangName(revSl)}</span>
-      <span class="arrow">→</span>
-      <span class="lang-label">${getLangName(revTl)}</span>
+      <div class="dual-header-left">
+        <span class="lang-label">${getLangName(revSl)}</span>
+        <span class="arrow">→</span>
+        <span class="lang-label">${getLangName(revTl)}</span>
+      </div>
+      <label class="dual-auto-toggle">
+        <span class="dual-auto-toggle-label">自動で再翻訳</span>
+        <div class="dual-toggle-track">
+          <div class="dual-toggle-thumb"></div>
+          <input type="checkbox" class="dual-toggle-input" />
+        </div>
+      </label>
     </div>
     <div class="dual-body">
       <div class="dual-input-area">
@@ -128,6 +137,7 @@ function createPanel(sl: string, tl: string): HTMLElement {
 
   const textarea = panel.querySelector("textarea")!;
   const resultDiv = panel.querySelector(".result-text")!;
+  const toggleInput = panel.querySelector<HTMLInputElement>(".dual-toggle-input")!;
 
   // TTS buttons
   const inputTtsRow = panel.querySelector(
@@ -147,22 +157,18 @@ function createPanel(sl: string, tl: string): HTMLElement {
   outputTtsRow.appendChild(outputTtsBtn);
 
   let debounceTimer: ReturnType<typeof setTimeout>;
-  let lastResult = "";
 
-  textarea.addEventListener("input", () => {
+  function triggerTranslate() {
     clearTimeout(debounceTimer);
     const text = textarea.value;
 
     updateFontSize(panel, text);
-
-    // Enable/disable input TTS
     inputTtsBtn.disabled = !text.trim();
 
     if (!text.trim()) {
       resultDiv.textContent = "翻訳";
       resultDiv.classList.add("placeholder");
       outputTtsBtn.disabled = true;
-      lastResult = "";
       return;
     }
 
@@ -175,15 +181,75 @@ function createPanel(sl: string, tl: string): HTMLElement {
         const result = await translate(text, revSl, revTl);
         resultDiv.textContent = result;
         resultDiv.classList.remove("placeholder");
-        lastResult = result;
         outputTtsBtn.disabled = !result.trim();
       } catch {
         resultDiv.textContent = "翻訳エラーが発生しました";
         resultDiv.classList.add("placeholder");
         outputTtsBtn.disabled = true;
-        lastResult = "";
       }
     }, 300);
+  }
+
+  textarea.addEventListener("input", triggerTranslate);
+
+  // Auto re-translate: watch the original translation output
+  let autoObserver: MutationObserver | null = null;
+
+  function getOriginalResultText(): string {
+    // The original translation result lives in span.ryNqvb[jsname="W297wb"]
+    const spans = document.querySelectorAll(
+      '.usGWQd span.ryNqvb[jsname="W297wb"]'
+    );
+    return Array.from(spans)
+      .map((s) => s.textContent ?? "")
+      .join("");
+  }
+
+  function feedOriginalResult() {
+    const text = getOriginalResultText();
+    if (text && text !== textarea.value) {
+      textarea.value = text;
+      triggerTranslate();
+    }
+  }
+
+  function startAutoWatch() {
+    // Initial feed
+    feedOriginalResult();
+
+    // Watch for changes in the original output area
+    const outputContainer = document.querySelector(".usGWQd");
+    if (!outputContainer) return;
+
+    autoObserver = new MutationObserver(() => {
+      feedOriginalResult();
+    });
+    autoObserver.observe(outputContainer, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
+
+  function stopAutoWatch() {
+    if (autoObserver) {
+      autoObserver.disconnect();
+      autoObserver = null;
+    }
+  }
+
+  const toggleTrack = panel.querySelector(".dual-toggle-track")!;
+
+  toggleInput.addEventListener("change", () => {
+    if (toggleInput.checked) {
+      toggleTrack.classList.add("active");
+      textarea.readOnly = true;
+      startAutoWatch();
+    } else {
+      toggleTrack.classList.remove("active");
+      textarea.readOnly = false;
+      stopAutoWatch();
+    }
   });
 
   return panel;

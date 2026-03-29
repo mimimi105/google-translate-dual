@@ -8,12 +8,18 @@
 #gt-dual-reverse-panel .dual-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   margin-bottom: 8px;
   font-family: 'Google Sans', arial, sans-serif;
   font-size: 14px;
   color: #5f6368;
   user-select: none;
+}
+
+#gt-dual-reverse-panel .dual-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #gt-dual-reverse-panel .dual-header .lang-label {
@@ -140,4 +146,52 @@
   position: absolute;
   bottom: 8px;
   left: 8px;
+}
+
+#gt-dual-reverse-panel .dual-auto-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#gt-dual-reverse-panel .dual-auto-toggle-label {
+  font-size: 13px;
+  color: #5f6368;
+}
+
+#gt-dual-reverse-panel .dual-toggle-track {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: #dadce0;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+#gt-dual-reverse-panel .dual-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+#gt-dual-reverse-panel .dual-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#gt-dual-reverse-panel .dual-toggle-track.active {
+  background: #1a73e8;
+}
+
+#gt-dual-reverse-panel .dual-toggle-track.active .dual-toggle-thumb {
+  transform: translateX(16px);
 }
