@@ -12,10 +12,16 @@ Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です
 ### Chrome 拡張機能
 準備中...
 
-### Tampermonkey (Userscript)
+### Tampermonkey / Greasy Fork (Userscript)
+
+[![Greasy Fork](https://img.shields.io/greasyfork/v/571641)](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction)
+
+1. [Greasy Fork のページ](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction) からインストール
+
+または手動で:
 
 1. [Tampermonkey](https://www.tampermonkey.net/) をブラウザにインストール
-2. [google-translate-dual.user.js](https://github.com/mimimi105/google-translate-dual/releases/latest/download/google-translate-dual.user.js) をクリックしてインストール
+2. [google-translate-dual.user.js](https://www.tampermonkey.net/script_installation.php#url=https://github.com/mimimi105/google-translate-dual/raw/refs/heads/main/dist/google-translate-dual.user.js) をクリックしてインストール
 
 ## 使い方
 
