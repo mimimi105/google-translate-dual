@@ -1,0 +1,16 @@
+{
+  "name": "google-translate-extension",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "bun run build.ts",
+    "dev": "bun run build.ts --watch"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/chrome": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

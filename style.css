@@ -1,0 +1,143 @@
+#gt-dual-reverse-panel {
+  border-top: 1px solid #dadce0;
+  padding: 8px 0 16px 0;
+  background: #fff;
+  margin-top: 8px;
+}
+
+#gt-dual-reverse-panel .dual-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: 'Google Sans', arial, sans-serif;
+  font-size: 14px;
+  color: #5f6368;
+  user-select: none;
+}
+
+#gt-dual-reverse-panel .dual-header .lang-label {
+  font-weight: 500;
+  color: #1a73e8;
+}
+
+#gt-dual-reverse-panel .dual-header .arrow {
+  color: #5f6368;
+}
+
+#gt-dual-reverse-panel .dual-body {
+  display: flex;
+  gap: 8px;
+}
+
+#gt-dual-reverse-panel .dual-input-area,
+#gt-dual-reverse-panel .dual-output-area {
+  flex: 1;
+  min-height: 80px;
+  position: relative;
+}
+
+#gt-dual-reverse-panel .dual-input-area textarea {
+  width: 100%;
+  min-height: 166px;
+  border: 1px solid #dadce0;
+  border-radius: 16px;
+  padding: 12px 16px 44px 16px;
+  font-family: 'Google Sans', arial, sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #202124;
+  resize: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#gt-dual-reverse-panel .dual-input-area textarea:focus {
+  border-color: #dadce0;
+  box-shadow: none;
+}
+
+#gt-dual-reverse-panel .dual-output-area .result-text {
+  padding: 12px 16px 44px 16px;
+  font-family: 'Google Sans', arial, sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #202124;
+  min-height: 166px;
+  background: #f0f9f2;
+  border-radius: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+#gt-dual-reverse-panel .dual-output-area .result-text.placeholder {
+  color: #80868b;
+}
+
+#gt-dual-reverse-panel.font-small .dual-input-area textarea,
+#gt-dual-reverse-panel.font-small .dual-output-area .result-text {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  fill: #5f6368;
+  transition: none;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn svg {
+  fill: inherit;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#gt-dual-reverse-panel .dual-tts-btn:hover::before {
+  opacity: 0.08;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn:active::before {
+  opacity: 0.12;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn.playing {
+  fill: #1a73e8;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+#gt-dual-reverse-panel .dual-tts-btn:disabled::before {
+  display: none;
+}
+
+#gt-dual-reverse-panel .dual-tts-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+}

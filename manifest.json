@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Google Translate Dual Direction",
+  "version": "1.0.0",
+  "description": "Adds a reverse translation panel below Google Translate",
+  "permissions": [],
+  "host_permissions": [
+    "https://translate.googleapis.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://translate.google.com/*", "https://translate.google.co.jp/*"],
+      "js": ["content.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
