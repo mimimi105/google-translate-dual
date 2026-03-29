@@ -12,6 +12,13 @@ Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です
 
 ## インストール
 
+### Tampermonkey / Greasy Fork (Userscript)
+
+[![Greasy Fork](https://img.shields.io/greasyfork/v/571641)](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction)
+
+1. [Tempermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) のインストール
+1. [Greasy Fork のページ](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction) からこの拡張機能をインストール
+
 ### Chrome 拡張機能
 
 1. [Releases](https://github.com/mimimi105/google-translate-dual/releases/latest) から `google-translate-dual-chrome.zip` をダウンロード
@@ -19,17 +26,6 @@ Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です
 3. Chrome で `chrome://extensions` を開く
 4. 右上の「デベロッパー モード」を有効にする
 5. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダを選択
-
-### Tampermonkey / Greasy Fork (Userscript)
-
-[![Greasy Fork](https://img.shields.io/greasyfork/v/571641)](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction)
-
-1. [Greasy Fork のページ](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction) からインストール
-
-または手動で:
-
-1. [Tampermonkey](https://www.tampermonkey.net/) をブラウザにインストール
-2. [google-translate-dual.user.js](https://www.tampermonkey.net/script_installation.php#url=https://github.com/mimimi105/google-translate-dual/raw/refs/heads/main/dist/google-translate-dual.user.js) をクリックしてインストール
 
 ## 使い方
 
