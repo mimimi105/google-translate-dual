@@ -16,7 +16,7 @@ Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です
 
 [![Greasy Fork](https://img.shields.io/greasyfork/v/571641)](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction)
 
-1. [Tempermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) のインストール
+1. [Tempermonkey](http://tampermonkey.net/) のインストール
 1. [Greasy Fork のページ](https://greasyfork.org/ja/scripts/571641-google-translate-dual-direction) からこの拡張機能をインストール
 
 ### Chrome 拡張機能
