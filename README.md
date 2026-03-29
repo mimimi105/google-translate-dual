@@ -1,10 +1,13 @@
 # Google Translate Dual Direction
+![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue) ![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Userscript-green)
+
 Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です。
 例えば「日本語 → 英語」で翻訳しているとき、その下に「英語 → 日本語」のパネルが自動で表示されます。言語の切り替え不要で、両方向の翻訳を1つの画面で確認できます。
 
 また、`自動再翻訳`を有効化することにより、翻訳した内容を自動的に再度翻訳にかけることができます。
 
-![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue) ![Tampermonkey](https://img.shields.io/badge/Tampermonkey-Userscript-green)
+<img style="display: inline-block;" width="400" height="260" alt="image" src="https://github.com/user-attachments/assets/6e15b123-afad-4616-8497-a2e1b3aafd65" />
+<img style="display: inline-block;" width="400" height="260" alt="image" src="https://github.com/user-attachments/assets/8bcaff48-cb74-45fc-87dd-f556a49aef31" />
 
 
 ## インストール
