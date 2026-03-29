@@ -13,7 +13,12 @@ Google 翻訳に**逆方向の翻訳パネル**を追加する拡張機能です
 ## インストール
 
 ### Chrome 拡張機能
-準備中...
+
+1. [Releases](https://github.com/mimimi105/google-translate-dual/releases/latest) から `google-translate-dual-chrome.zip` をダウンロード
+2. ZIP を解凍
+3. Chrome で `chrome://extensions` を開く
+4. 右上の「デベロッパー モード」を有効にする
+5. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダを選択
 
 ### Tampermonkey / Greasy Fork (Userscript)
 
