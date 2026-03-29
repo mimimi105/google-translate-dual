@@ -1,8 +1,8 @@
-const langDisplayNames = new Intl.DisplayNames(["ja"], { type: "language" });
-
 export function getLangName(code: string): string {
+  const pageLang = document.documentElement.lang || navigator.language || "en";
   try {
-    return langDisplayNames.of(code) ?? code;
+    const dn = new Intl.DisplayNames([pageLang], { type: "language" });
+    return dn.of(code) ?? code;
   } catch {
     return code;
   }

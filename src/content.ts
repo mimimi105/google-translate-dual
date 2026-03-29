@@ -1,6 +1,7 @@
 import { PANEL_ID, SELECTORS } from "./constants.ts";
 import { getParams } from "./utils.ts";
 import { createPanel } from "./components/panel.ts";
+import { initI18n, whenReady } from "./i18n.ts";
 
 function isOriginalReady(): boolean {
   return !!document.querySelector(SELECTORS.originalTextarea);
@@ -11,7 +12,7 @@ function findInsertionPoint(): Element | null {
   return document.querySelector(SELECTORS.insertionPoint);
 }
 
-function inject() {
+async function inject() {
   if (document.getElementById(PANEL_ID)) return;
 
   const params = getParams();
@@ -19,6 +20,8 @@ function inject() {
 
   const container = findInsertionPoint();
   if (!container) return;
+
+  await whenReady();
 
   const panel = createPanel(params.sl, params.tl);
   container.parentElement?.insertBefore(panel, container.nextSibling);
@@ -41,16 +44,19 @@ function watchUrlChange() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-function initAfterLoad() {
+async function initAfterLoad() {
+  // Start translating UI strings immediately
+  initI18n();
+
   if (findInsertionPoint()) {
-    inject();
+    await inject();
     watchUrlChange();
     return;
   }
-  const observer = new MutationObserver(() => {
+  const observer = new MutationObserver(async () => {
     if (findInsertionPoint()) {
       observer.disconnect();
-      inject();
+      await inject();
       watchUrlChange();
     }
   });

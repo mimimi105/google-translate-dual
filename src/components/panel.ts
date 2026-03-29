@@ -8,6 +8,7 @@ import {
 import { getLangName } from "../utils.ts";
 import { translate } from "../translate.ts";
 import { createTtsButton } from "./tts-button.ts";
+import { t } from "../i18n.ts";
 
 function updateFontSize(panel: HTMLElement, text: string) {
   panel.classList.toggle("font-small", text.length > FONT_SMALL_THRESHOLD);
@@ -28,7 +29,7 @@ export function createPanel(sl: string, tl: string): HTMLElement {
         <span class="lang-label">${getLangName(revTl)}</span>
       </div>
       <label class="dual-auto-toggle">
-        <span class="dual-auto-toggle-label">自動で再翻訳</span>
+        <span class="dual-auto-toggle-label">${t("autoRetranslate")}</span>
         <div class="dual-toggle-track">
           <div class="dual-toggle-thumb"></div>
           <input type="checkbox" class="dual-toggle-input" />
@@ -37,11 +38,11 @@ export function createPanel(sl: string, tl: string): HTMLElement {
     </div>
     <div class="dual-body">
       <div class="dual-input-area">
-        <textarea placeholder="${getLangName(revSl)} のテキストを入力..."></textarea>
+        <textarea placeholder="${t("placeholder", { lang: getLangName(revSl) })}"></textarea>
         <div class="dual-tts-row" data-side="input"></div>
       </div>
       <div class="dual-output-area">
-        <div class="result-text placeholder">翻訳</div>
+        <div class="result-text placeholder">${t("resultPlaceholder")}</div>
         <div class="dual-tts-row" data-side="output"></div>
       </div>
     </div>
@@ -77,7 +78,7 @@ export function createPanel(sl: string, tl: string): HTMLElement {
       resultDiv.textContent = lastResult + "...";
       resultDiv.classList.remove("placeholder");
     } else {
-      resultDiv.textContent = "翻訳";
+      resultDiv.textContent = t("resultPlaceholder");
       resultDiv.classList.add("placeholder");
     }
     outputTtsBtn.disabled = true;
@@ -92,7 +93,7 @@ export function createPanel(sl: string, tl: string): HTMLElement {
 
     if (!text.trim()) {
       lastResult = "";
-      resultDiv.textContent = "翻訳";
+      resultDiv.textContent = t("resultPlaceholder");
       resultDiv.classList.add("placeholder");
       outputTtsBtn.disabled = true;
       return;
@@ -108,7 +109,7 @@ export function createPanel(sl: string, tl: string): HTMLElement {
         resultDiv.classList.remove("placeholder");
         outputTtsBtn.disabled = !result.trim();
       } catch {
-        resultDiv.textContent = "翻訳エラーが発生しました";
+        resultDiv.textContent = t("error");
         resultDiv.classList.add("placeholder");
         outputTtsBtn.disabled = true;
       }

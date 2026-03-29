@@ -1,4 +1,5 @@
 import { SpeakerIcon, StopIcon } from "./icons.ts";
+import { t } from "../i18n.ts";
 
 export function createTtsButton(
   lang: string,
@@ -7,7 +8,7 @@ export function createTtsButton(
   const btn = document.createElement("button");
   btn.className = "dual-tts-btn";
   btn.innerHTML = SpeakerIcon;
-  btn.title = "音声を聞く";
+  btn.title = t("listen");
   btn.disabled = true;
 
   let audio: HTMLAudioElement | null = null;
@@ -22,7 +23,7 @@ export function createTtsButton(
     playing = false;
     btn.classList.remove("playing");
     btn.innerHTML = SpeakerIcon;
-    btn.title = "音声を聞く";
+    btn.title = t("listen");
   }
 
   btn.addEventListener("click", () => {
@@ -39,7 +40,7 @@ export function createTtsButton(
     playing = true;
     btn.classList.add("playing");
     btn.innerHTML = StopIcon;
-    btn.title = "停止";
+    btn.title = t("stop");
 
     audio.play().catch(() => stop());
     audio.addEventListener("ended", stop);
