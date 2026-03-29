@@ -3,7 +3,7 @@ const result = await Bun.build({
   outdir: "./dist",
   naming: "[name].js",
   target: "browser",
-  minify: false,
+  minify: true,
 });
 
 if (!result.success) {
