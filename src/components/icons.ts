@@ -35,3 +35,30 @@ export function createStopIcon(): SVGSVGElement {
   s.appendChild(path("M6,6h12v12H6V6z"));
   return s;
 }
+
+export function createCopyIcon(): SVGSVGElement {
+  const s = svg(20, 20);
+  const g1 = document.createElementNS(SVG_NS, "g");
+  g1.appendChild(rect("none", 24, 24));
+  s.appendChild(g1);
+  const g2 = document.createElementNS(SVG_NS, "g");
+  g2.appendChild(
+    path(
+      "M16,20H5V6H3v14c0,1.1,0.9,2,2,2h11V20z M20,16V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9 C19.1,18,20,17.1,20,16z M18,16H9V4h9V16z"
+    )
+  );
+  s.appendChild(g2);
+  return s;
+}
+
+function rect(
+  fill: string,
+  width: number,
+  height: number
+): SVGRectElement {
+  const el = document.createElementNS(SVG_NS, "rect");
+  el.setAttribute("fill", fill);
+  el.setAttribute("width", String(width));
+  el.setAttribute("height", String(height));
+  return el;
+}

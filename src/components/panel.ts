@@ -8,6 +8,7 @@ import {
 import { getLangName } from "../utils.ts";
 import { translate } from "../translate.ts";
 import { createTtsButton } from "./tts-button.ts";
+import { createCopyButton } from "./copy-button.ts";
 import { t } from "../i18n.ts";
 
 function el<K extends keyof HTMLElementTagNameMap>(
@@ -105,8 +106,14 @@ export function createPanel(sl: string, tl: string): HTMLElement {
     const text = resultDiv.textContent ?? "";
     return resultDiv.classList.contains("placeholder") ? "" : text;
   });
+  const copyBtn = createCopyButton(() => {
+    const text = resultDiv.textContent ?? "";
+    return resultDiv.classList.contains("placeholder") ? "" : text;
+  });
+
   inputTtsRow.appendChild(inputTtsBtn);
   outputTtsRow.appendChild(outputTtsBtn);
+  outputTtsRow.appendChild(copyBtn);
 
   // Translation logic
   let debounceTimer: ReturnType<typeof setTimeout>;

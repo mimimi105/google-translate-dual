@@ -150,6 +150,12 @@
   left: 8px;
 }
 
+#gt-dual-reverse-panel .dual-tts-row[data-side="output"] {
+  left: 8px;
+  right: 8px;
+  justify-content: space-between;
+}
+
 #gt-dual-reverse-panel .dual-auto-toggle {
   display: flex;
   align-items: center;
